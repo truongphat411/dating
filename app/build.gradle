@@ -1,0 +1,77 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+apply plugin: 'kotlin-android-extensions'
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.application.dating"
+        minSdk 28
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    // Animate Horizontal Progress Bar
+    implementation 'com.github.MackHartley:RoundedProgressBar:2.1.1'
+    //live data
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    //material
+    implementation 'com.google.android.material:material:1.4.0'
+    //Lottie
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    //Bottom navigation bar
+    implementation 'com.github.ismaeldivita:chip-navigation-bar:1.3.4'
+    //circle view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    //Rxjava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    //BottomSheet Image Picker
+    implementation 'co.csadev:kwikpicker:2.0.0'
+    //Image picker
+    implementation 'com.github.Drjacky:ImagePicker:2.1.13'
+    //Dialog progressbar
+    implementation 'com.github.fevziomurtekin:custom-progress-dialog:0.1.0'
+
+    implementation 'com.regula.documentreader.core:fullrfid:5.8.+@aar'
+    implementation('com.regula.documentreader:api:5.8.+@aar') {
+        transitive = true;
+    }
+}

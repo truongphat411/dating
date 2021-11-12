@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/txt_Howoldareyou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bạn bao nhiêu tuổi?"
+        android:fontFamily="@font/opensans_bold"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_txt_day_month_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_Howoldareyou"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/txt_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/opensans_light"
+            android:gravity="center"
+            android:text="Ngày"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/txt_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/opensans_light"
+            android:gravity="center"
+            android:text="Tháng"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/txt_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/opensans_light"
+            android:gravity="center"
+            android:text="Năm"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_txt_day_month_year"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <EditText
+            android:id="@+id/edt_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_bg_edittext_dmy"
+            android:fontFamily="@font/opensans_light"
+            android:gravity="center"
+            android:hint="NN"
+            android:paddingTop="10dp"
+            android:maxLength="2"
+            android:paddingBottom="10dp"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/edt_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:maxLength="2"
+            android:background="@drawable/custom_bg_edittext_dmy"
+            android:fontFamily="@font/opensans_light"
+            android:gravity="center"
+            android:hint="TT"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/edt_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:maxLength="4"
+            android:background="@drawable/custom_bg_edittext_dmy"
+            android:fontFamily="@font/opensans_light"
+            android:gravity="center"
+            android:hint="NNNN"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:inputType="number"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_day_of_birth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_bold"
+        android:background="@drawable/button_bg_color"
+        android:text="Tiếp tục"
+        android:textSize="15sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        />
+</RelativeLayout>

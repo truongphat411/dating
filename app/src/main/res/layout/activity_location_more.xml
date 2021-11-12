@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageButton
+        android:id="@+id/imv_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_up"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:padding="5dp"
+        />
+    <Button
+        android:id="@+id/btn_login_gmail"
+        android:layout_below="@+id/imv_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_bold"
+        android:background="@drawable/button_bg_color"
+        android:text="CHO PHÉP BẬT ĐỊA ĐIỂM"
+        android:textSize="20sp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gặp gỡ những người ở\n              gần bên"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/opensans_bold"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        />
+    <TextView
+        android:layout_below="@id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\t\t\t\t\t\t\tTăng cơ hội của bạn bằng cách cho phép truy cập vào vị trí của bạn.\n\t\t\t\t\t\t\Chúng tôi chỉ sử dụng vị trí của bạn để tìm những người ở gần bạn"
+        android:textSize="17sp"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/opensans_bold"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="10dp"
+        />
+</RelativeLayout>

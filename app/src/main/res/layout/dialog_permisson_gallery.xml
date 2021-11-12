@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    android:orientation="vertical"
+    android:background="@drawable/bg_dialog_permisson">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Truy Cập Hình Ảnh"
+        android:padding="12dp"
+        android:gravity="center"
+        android:fontFamily="@font/opensans_bold"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Để tải ảnh lên từ thiết bị của bạn,"
+            android:gravity="center"
+            android:fontFamily="@font/opensans_light"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Love_Alarm_Clone cần truy cập vào hình ảnh"
+            android:gravity="center"
+            android:fontFamily="@font/opensans_light"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="của bạn."
+            android:fontFamily="@font/opensans_light"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text1_dialog_permission"
+            android:gravity="center"
+            android:fontFamily="@font/opensans_light"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="bước tiếp theo."
+            android:gravity="center"
+            android:fontFamily="@font/opensans_light"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/txt_okay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OKAY"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/bg_bottom_dialog_permission"
+        android:fontFamily="@font/opensans_bold"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        />
+</LinearLayout>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Dating App</string>
+    <string name="text1_dialog_permission">Vui lòng bấm vào "Cho phép" ở</string>
+</resources>
