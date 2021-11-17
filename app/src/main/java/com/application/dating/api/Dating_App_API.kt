@@ -1,33 +1,27 @@
 package com.application.dating.api
 
-import com.application.dating.model.Account
-import com.application.dating.model.Compare_API
-import com.application.dating.model.File_Image
+import com.application.dating.model.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface Dating_App_API{
+
     @POST("api/login/")
     fun LoginUser(@Body userData: Account): Observable<Account>
 
     @POST("api/register/")
-    fun RegisterUser(@Body userData: Account): Observable<String>
+    fun RegisterUser(@Body userData: Account_Male): Observable<String>
 
     @Multipart
     @POST("api/image/")
     fun uploadImage(@Part imagepath : MultipartBody.Part,
                     @Part("account_id") account_id : RequestBody,
-    ) : Call<File_Image>
+    ) : Call<File_Image_Male>
 
     @Multipart
     @POST("v3/compare")
@@ -36,6 +30,17 @@ interface Dating_App_API{
            @Part("api_key") api_key : RequestBody,
            @Part("api_secret") api_secret : RequestBody
     ) : Call<Compare_API>
+
+/*
+    @GET("api/imagemale")
+    fun getImageMale() : Call<File_Image_Male>
+*/
+
+/*    @GET("api/imagemale")
+    val getImageMale : Observable<List<File_Image_Male>>*/
+
+    @POST("api/imagefemale/getimagefemale")
+    fun getImageMale(@Body userData: Account): Observable<List<File_Image_Male>>
 
     companion object{
         operator fun invoke(baseUrl : String) : Dating_App_API {
@@ -46,5 +51,4 @@ interface Dating_App_API{
                 .create(Dating_App_API::class.java)
         }
     }
-
 }

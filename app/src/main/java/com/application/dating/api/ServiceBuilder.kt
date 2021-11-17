@@ -12,7 +12,7 @@ object ServiceBuilder {
 
     fun getInstance() : Retrofit {
         if(instance == null)
-            instance = Retrofit.Builder().baseUrl("http://192.168.1.10:8086/")
+            instance = Retrofit.Builder().baseUrl("http://192.168.1.7:8086/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -26,6 +26,5 @@ object ServiceBuilder {
             .baseUrl("http://192.168.1.10:8086/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
     }
 }

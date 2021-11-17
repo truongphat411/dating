@@ -1,32 +1,29 @@
 package com.application.dating.register.fragment
 
+import android.Manifest
 import android.app.Activity
-import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.application.dating.model.File_Image
 import com.application.dating.R
 import com.application.dating.register.Register_ViewModel
-import com.application.dating.register.repository.UploadRequestBody
-import com.application.dating.register.repository.getFilename
 import com.application.dating.api.Dating_App_API
-import com.application.dating.api.ServiceBuilder
 import com.application.dating.model.Compare_API
-import com.fevziomurtekin.customprogress.Dialog
-import com.github.drjacky.imagepicker.ImagePicker
+import com.application.dating.register.Utils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.bottomsheet_choose_image.view.*
 import kotlinx.android.synthetic.main.register_avatar_fragment.*
 import kotlinx.android.synthetic.main.register_avatar_fragment.view.*
@@ -36,15 +33,14 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
+import java.io.*
 
-class Register_Avatar_Fragment : Fragment() , UploadRequestBody.UploadCallback {
+class Register_Avatar_Fragment : Fragment() , Utils {
     lateinit var viewModel: Register_ViewModel
     private val CAMERA_PERMISSION_CODE = 123
     private val STORAGE_PERMISSION_CODE = 113
-    private var selectedImage: Uri? = null
+    lateinit var  my_bm: Bitmap
+    lateinit var  filePath : String
     private var conpositeDisposable = CompositeDisposable()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,18 +62,18 @@ class Register_Avatar_Fragment : Fragment() , UploadRequestBody.UploadCallback {
             check_image()
         }
         view2.ll_choose_camera.setOnClickListener {
-            launcher.launch(
+/*            launcher.launch(
                 ImagePicker.with(requireActivity())
                     .cameraOnly()
                     .crop(1f, 1f)
                     .cropOval()
                     .maxResultSize(1080, 1080)
                     .createIntent()
-            )
+            )*/
             bottomSheetDialog.dismiss()
         }
         view2.ll_choose_gallery.setOnClickListener {
-            launcher.launch(
+/*            launcher.launch(
                 ImagePicker.with(requireActivity())
                     .galleryOnly()
                     .galleryMimeTypes(  //Exclude gif images
@@ -91,13 +87,21 @@ class Register_Avatar_Fragment : Fragment() , UploadRequestBody.UploadCallback {
                     .cropOval()
                     .maxResultSize(1080, 1080)
                     .createIntent()
-            )
+            )*/
+                if(ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                        PackageManager.PERMISSION_DENIED) {
+                        // permission denied
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    requestPermissions(permissions,STORAGE_PERMISSION_CODE)
+                }else{
+                    pickImageFromGallery()
+                }
             bottomSheetDialog.dismiss()
         }
         return view
     }
 
-    private val launcher =
+/*    private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 selectedImage = it.data?.data
@@ -109,9 +113,43 @@ class Register_Avatar_Fragment : Fragment() , UploadRequestBody.UploadCallback {
             } else {
                 Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
+        }*/
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode){
+            STORAGE_PERMISSION_CODE -> {
+                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    pickImageFromGallery()
+                }else{
+                    Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
+    }
+    private fun pickImageFromGallery(){
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent,STORAGE_PERMISSION_CODE)
         }
 
-    private fun checkPermission(permission: String, requestCode: Int) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode,requestCode,data)
+        if(resultCode == Activity.RESULT_OK && requestCode == STORAGE_PERMISSION_CODE){
+            val selectedImage = data?.data
+            my_bm = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, selectedImage)
+            imv_profile.setImageBitmap(my_bm)
+            imv_ic_camera.visibility = View.GONE
+        }
+    }
+
+
+ //   private fun checkPermission()
+/*    private fun checkPermission(permission: String, requestCode: Int) {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 permission
@@ -122,9 +160,9 @@ class Register_Avatar_Fragment : Fragment() , UploadRequestBody.UploadCallback {
             Toast.makeText(requireContext(), "Permission Granted already", Toast.LENGTH_SHORT)
                 .show()
         }
-    }
+    }*/
 
-    override fun onRequestPermissionsResult(
+  /*  override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
@@ -147,57 +185,47 @@ class Register_Avatar_Fragment : Fragment() , UploadRequestBody.UploadCallback {
                     .show()
             }
         }
-    }
+    }*/
 
     private fun check_image() {
-        if (selectedImage == null) {
-            return
-        }
-        val parcelFileDescriptor =
-            requireContext().contentResolver?.openFileDescriptor(selectedImage!!, "r", null)
-                ?: return
+        //Use BitmapFactory to load bitmap from Path
+/*        val fullSizeBitmap1 : Bitmap = BitmapFactory.decodeFile("")
+        val fullSizeBitmap2 : Bitmap = BitmapFactory.decodeFile("aaa")*/
 
-        val parcelFileDescriptor1 =requireContext().contentResolver?.openFileDescriptor(selectedImage!!, "r", null)
-                ?: return
-
-        progress_bar.progress = 0
-
-        val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
-        val file = File(requireContext().cacheDir, getFilename(requireContext().contentResolver, selectedImage!!))
-        val outputStream = FileOutputStream(file)
-        inputStream.copyTo(outputStream)
-
-        val inputStream1 = FileInputStream(parcelFileDescriptor1.fileDescriptor)
-        val file1 = File(requireContext().cacheDir, getFilename(requireContext().contentResolver, selectedImage!!))
-        val outputStream1 = FileOutputStream(file1)
-        inputStream1.copyTo(outputStream1)
+        val bitmap1 = BitmapFactory.decodeResource(resources,R.drawable.aaaa)
+        val bitmap2 = BitmapFactory.decodeResource(resources,R.drawable.bbbbbb)
+        //Scale Down the Bimap
+        val reducedBitmap1 : Bitmap = reduceBitmapSize(bitmap1,240000)
+        val reducedBitmap2 : Bitmap = reduceBitmapSize(bitmap2,240000)
 
 
-        val body = UploadRequestBody(file, "image", this)
-        val body1 = UploadRequestBody(file1, "image", this)
+        //Save the Scaled Down Bitmap to file
+        val reducedFile1 : File = bitmaptofile("img1.jpg",requireContext(),reducedBitmap1)
+        val reducedFile2 : File = bitmaptofile("img2.jpg",requireContext(),reducedBitmap2)
+
+        Log.d("haha", "check_image: "+reducedFile1.length())
+        Log.d("haha", "check_image12312: "+reducedFile2.length())
+
+
+        val requestBody1 : RequestBody = RequestBody.create(MediaType.parse("image/*"),reducedFile1)
+        val requestBody2 : RequestBody = RequestBody.create(MediaType.parse("image/*"),reducedFile2)
 
         Dating_App_API("https://api-us.faceplusplus.com/facepp/").checkImage(
             MultipartBody.Part.createFormData(
-                "image",
-                file.name,
-                body
+                "image_file1",
+                reducedFile1.name,
+                requestBody1
             ),
             MultipartBody.Part.createFormData(
-                "image1",
-                file1.name,
-                body1
+                "image_file2",
+                reducedFile2.name,
+                requestBody2
             ),
             RequestBody.create(MediaType.parse("multipart/form-data"), "8NlrUwBlGYK3m8x5SMyivPzTFiA6sbjn"),
             RequestBody.create(MediaType.parse("multipart/form-data"), "Z3D_LsTN1TfEDOHvQMxLwBhoAvfG6A0v")
         ).enqueue(object : Callback<Compare_API> {
             override fun onResponse(call: Call<Compare_API>, response: Response<Compare_API>) {
-                progress_bar.progress = 100
-                var ca : Compare_API? = response.body()
-                if(ca!=null){
-                    Toast.makeText(requireContext(),"Phần trăm là:"+response.body()?.confidence,Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(requireContext(),"...",Toast.LENGTH_SHORT).show()
-                }
+                Log.d("hihi", "onResponse: "+response.body())
             }
             override fun onFailure(call: Call<Compare_API>, t: Throwable) {
                 Toast.makeText(requireContext(),t.message,Toast.LENGTH_SHORT).show()
@@ -205,47 +233,46 @@ class Register_Avatar_Fragment : Fragment() , UploadRequestBody.UploadCallback {
 
         })
     }
+    override fun bitmaptofile(filename : String,context: Context, bm: Bitmap): File {
+        //create a file to write bitmap data
+        val f  =  File(context.cacheDir, filename)
+        f.createNewFile()
 
+        //Convert bitmap to byte array
+        val bitmap : Bitmap = bm
+        val bos =  ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, bos)
+        val bitmapdata = bos.toByteArray()
 
-    private fun uploadFile() {
-        if (selectedImage == null) {
-            Toast.makeText(requireContext(),"Thất bại",Toast.LENGTH_SHORT).show()
-            return
+        //write the bytes in file
+        var fos : FileOutputStream?= null
+        try {
+            fos =  FileOutputStream(f)
+        } catch (e : FileNotFoundException) {
+            e.printStackTrace()
         }
-        val parcelFileDescriptor = requireContext().contentResolver?.openFileDescriptor(selectedImage!!, "r", null) ?: return
-
-        progress_bar.progress = 0
-
-        val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
-        val file = File(requireContext().cacheDir, getFilename(requireContext().contentResolver,selectedImage!!))
-        val outputStream = FileOutputStream(file)
-        inputStream.copyTo(outputStream)
-
-       /* val body = UploadRequestBody(file, "image",this)
-        Dating_App_API().uploadImage(
-            MultipartBody.Part.createFormData(
-                "image",
-                file.name,
-                body
-            ),
-            RequestBody.create(MediaType.parse("multipart/form-data"), "28")
-        ).enqueue(object : Callback<File_Image> {
-            override fun onFailure(call: Call<File_Image>, t: Throwable) {
-                progress_bar.progress = 0
-                Toast.makeText(requireContext(),t.message,Toast.LENGTH_SHORT).show()
-            }
-            override fun onResponse(call: Call<File_Image>, response: Response<File_Image>
-            ) {
-                response.body()?.let {
-                    progress_bar.progress = 100
-                    Toast.makeText(requireContext(),"Thành công",Toast.LENGTH_SHORT).show()
-                }
-
-            }
-        })*/
+        try {
+            fos!!.write(bitmapdata)
+            fos.flush()
+            fos.close()
+        } catch (e : IOException) {
+            e.printStackTrace()
+        }
+        return f
     }
-    override fun onProgressUpdate(percentage: Int) {
-        progress_bar.progress = percentage
+
+    override fun reduceBitmapSize(bm: Bitmap, MAX_SIZE: Int): Bitmap {
+        var ratioSquare : Double = 0.0
+        val bitmapHeight : Int = 50
+        val bitmapWidth : Int = 50
+        ratioSquare = ((bitmapHeight * bitmapHeight) / MAX_SIZE).toDouble()
+        if(ratioSquare <= 1)
+            return bm;
+        val ratio : Double = Math.sqrt(ratioSquare)
+        Log.d("my log", "reduceBitmapSize: " + ratio)
+        val requiredHeight : Long = Math.round(bitmapHeight / ratio)
+        val requiredWidth : Long = Math.round(bitmapWidth / ratio)
+        return Bitmap.createScaledBitmap(bm, 100, 100,true)
     }
     /*    if (text_gender!!.isNotEmpty() && text_gender_requirement!!.isNotEmpty()){
                 val userInfo = Account(Infomation_Activity.register_name,
@@ -272,3 +299,4 @@ class Register_Avatar_Fragment : Fragment() , UploadRequestBody.UploadCallback {
                 Toast.makeText(requireActivity(),"Vui lòng chọn đầy đủ thông tin",Toast.LENGTH_SHORT).show()
             }*/
 }
+

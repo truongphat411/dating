@@ -30,49 +30,49 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginStart="30dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/custom_bg_textview"
-            android:drawableStart="@drawable/ic_boy"
             android:drawablePadding="14dp"
             android:padding="14dp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
             android:text="Nam"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:drawableStartCompat="@drawable/ic_boy" />
 
         <TextView
             android:id="@+id/txt_gender_female"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/txt_gender_male"
+            android:layout_below="@+id/txt_gender_male"
             android:background="@drawable/custom_bg_textview"
-            android:text="Nữ"
-            android:drawableStart="@drawable/ic_girl"
             android:drawablePadding="14dp"
+            android:padding="14dp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
-            android:padding="14dp"
-            android:textSize="20sp"
+            android:text="Nữ"
             android:textColor="@color/black"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            />
+            android:textSize="20sp"
+            app:drawableStartCompat="@drawable/ic_girl"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
     </RelativeLayout>
+<!--
     <TextView
         android:id="@+id/txt_Whoareyoulookingfor"
-        android:layout_below="@+id/rl_gender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bạn đang tìm ?"
-        android:fontFamily="@font/opensans_bold"
-        android:textColor="@color/black"
-        android:textSize="25sp"
+        android:layout_below="@+id/rl_gender"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        />
+        android:fontFamily="@font/opensans_bold"
+        android:text="Bạn đang tìm ?"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -134,5 +134,23 @@
         android:text="Tiếp tục"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:textSize="15sp" />-->
+    <Button
+        android:id="@+id/btn_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/button_bg_color"
+        android:fontFamily="@font/opensans_bold"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="Tiếp tục"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15sp" />-->
 </RelativeLayout>

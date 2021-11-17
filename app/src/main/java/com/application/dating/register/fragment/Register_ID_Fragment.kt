@@ -1,5 +1,7 @@
 package com.application.dating.register.fragment
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -7,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory.create
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.application.dating.R
@@ -29,11 +33,16 @@ import com.regula.documentreader.api.enums.eVisualFieldType
 import com.regula.documentreader.api.errors.DocumentReaderException
 import com.regula.documentreader.api.params.DocReaderConfig
 import com.regula.documentreader.api.results.DocumentReaderResults
+import io.reactivex.Flowable.just
 import kotlinx.android.synthetic.main.register_id_fragment.*
 import kotlinx.android.synthetic.main.register_id_fragment.view.*
+import java.io.*
+import java.util.*
+import io.reactivex.android.schedulers.AndroidSchedulers
 
-import java.io.FileNotFoundException
-import java.io.InputStream
+import io.reactivex.schedulers.Schedulers
+import java.lang.Exception
+
 
 class Register_ID_Fragment : Fragment(){
     lateinit var viewModel: Register_ViewModel
@@ -44,7 +53,6 @@ class Register_ID_Fragment : Fragment(){
         private const val REQUEST_BROWSE_PICTURE = 11
         private const val PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 22
         private const val MY_SHARED_PREFS = "MySharedPrefs"
-         var selectedImage : Uri ?= null
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.register_id_fragment,container,false)
@@ -213,8 +221,7 @@ class Register_ID_Fragment : Fragment(){
             val portrait = results.getGraphicFieldImageByType(eGraphicFieldType.GF_PORTRAIT)
             val name = results.getTextFieldValueByType(eVisualFieldType.FT_SURNAME_AND_GIVEN_NAMES)
             if (name != null && portrait != null) {
-                //nameTv!!.text = name
-                    view?.txt_message?.visibility = View.GONE
+                view?.txt_message?.visibility = View.GONE
             }else{
                 view?.txt_message?.visibility = View.VISIBLE
             }
