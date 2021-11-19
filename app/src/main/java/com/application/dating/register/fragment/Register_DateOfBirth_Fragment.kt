@@ -20,7 +20,7 @@ class Register_DateOfBirth_Fragment : Fragment (){
         viewModel = ViewModelProvider(requireActivity()).get(Register_ViewModel::class.java)
         viewModel.selectItem(20.0)
         view.btn_day_of_birth.setOnClickListener{
-            txtdate = view.edt_day.text.toString() + "/" + view.edt_month.text.toString() + "/" + view.edt_year.text.toString()
+            txtdate = view.edt_year.text.toString() + "/" + view.edt_month.text.toString() + "/" + view.edt_day.text.toString()
             viewModel.dateofbirth(txtdate.toString())
             viewModel.selectItem(40.0)
             val fragment = Register_Gender_Fragment()

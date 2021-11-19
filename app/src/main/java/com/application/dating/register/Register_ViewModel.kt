@@ -9,7 +9,7 @@ class Register_ViewModel : ViewModel() {
     private var progress_double = MutableLiveData<Double>()
     val selectItem: LiveData<Double> get() = progress_double
     private var text_username = MutableLiveData<String>()
-    val email : LiveData<String> get() = text_username
+    val username : LiveData<String> get() = text_username
     private var text_password = MutableLiveData<String>()
     val password : LiveData<String> get() = text_password
     private var text_name = MutableLiveData<String>()

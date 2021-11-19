@@ -25,7 +25,8 @@
         android:layout_marginRight="30dp"
         android:background="@drawable/custom_bg_edittext"
         android:ems="10"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:paddingStart="12dp"/>
 
     <Button
         android:id="@+id/btn_name"

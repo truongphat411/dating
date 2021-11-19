@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -53,6 +54,7 @@ class Register_ID_Fragment : Fragment(){
         private const val REQUEST_BROWSE_PICTURE = 11
         private const val PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 22
         private const val MY_SHARED_PREFS = "MySharedPrefs"
+        lateinit var encodeDocumentString : String
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.register_id_fragment,container,false)
@@ -110,7 +112,7 @@ class Register_ID_Fragment : Fragment(){
     private fun initView(view : View) {
         view.btn_choose!!.setOnClickListener { _: View? ->
             if (!DocumentReader.Instance().documentReaderIsReady) {
-                val initDialog = showDialog("Initializing")
+                val initDialog = showDialog("Vui lòng chờ....")
                 //preparing database files, it will be downloaded from network only one time and stored on user device
                 DocumentReader.Instance().prepareDatabase(
                     requireActivity(),
@@ -244,9 +246,15 @@ class Register_ID_Fragment : Fragment(){
                     false
                 )
                 documentImageIv!!.setImageBitmap(documentImage)
-
+                encodeBitmapImage(documentImage)
             }
         }
+    }
+    private fun encodeBitmapImage(bitmap: Bitmap){
+        val byteArrayOutputStream : ByteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream)
+        val byteofimage = byteArrayOutputStream.toByteArray()
+        encodeDocumentString = android.util.Base64.encodeToString(byteofimage, Base64.DEFAULT)
     }
     private fun clearResults() {
         documentImageIv!!.setImageResource(R.drawable.ic_id)

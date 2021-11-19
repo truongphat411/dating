@@ -47,7 +47,7 @@
             android:id="@+id/edt_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="Username"
             app:boxStrokeColor="@color/black"
             app:hintTextColor="@color/black"
             app:counterTextColor="@color/black"

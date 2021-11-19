@@ -14,4 +14,4 @@ data class Account(
     val age_range : Int = 0,
     val live_at : String ?= null,
     val is_status: Boolean = false
-    )
+)

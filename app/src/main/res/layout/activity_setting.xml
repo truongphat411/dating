@@ -5,8 +5,27 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <!--<include layout="@layout/layout_top_navigation_back"/>-->
-    <include layout="@layout/layout_top_navigation_back" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/ic_chevron_left_black_24dp" />
+        <com.application.dating.customfonts.MyTextView_Roboto_Bold
+            android:id="@+id/toolbartag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="Thiết lập"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
                         android:paddingTop="10dp"
-                        android:text="Show Me"
+                        android:text="Hiển thị"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -50,7 +69,7 @@
                         android:gravity="end"
                         android:paddingEnd="10dp"
                         android:paddingRight="10dp"
-                        android:text="Women"
+                        android:text="Nữ"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
@@ -62,7 +81,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
-                            android:text="Men"
+                            android:text="Nam"
                             android:textSize="18dp" />
 
                         <androidx.appcompat.widget.SwitchCompat
@@ -88,7 +107,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
-                            android:text="Women"
+                            android:text="Nữ"
                             android:textSize="18dp" />
 
                         <androidx.appcompat.widget.SwitchCompat
@@ -128,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
                         android:paddingTop="10dp"
-                        android:text="Maximum Distance"
+                        android:text="Khoảng cách tối đa"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -178,24 +197,34 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
                         android:paddingTop="10dp"
-                        android:text="Age Range"
+                        android:text="Độ tuổi"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18dp"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/age_range"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="end"
-                        android:paddingEnd="10dp"
-                        android:paddingRight="10dp"
+                        >
 
-                        android:text="18-65"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        <TextView
+                            android:id="@+id/age_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="18 - "
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            android:layout_toLeftOf="@+id/age_rage"/>
 
+                        <TextView
+                            android:id="@+id/age_rage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="50"
+                            android:paddingRight="15dp"
+                            android:layout_alignParentRight="true"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+                    </RelativeLayout>
 <!--                    <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
                         xmlns:rsb="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/rangeSeekbar"
@@ -212,8 +241,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:max="100"
-                        android:min="5"
-                        android:progress="20"
+                        android:min="18"
+                        android:progress="50"
                         android:progressDrawable="@drawable/custom_seekbar_progress"
                         android:thumb="@drawable/seek_bar_thumb" />
                 </LinearLayout>

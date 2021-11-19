@@ -42,9 +42,14 @@
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/drawable/roundbtn.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/drawable/seek_bar_thumb.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_checkin.xml" value="0.171875" />
-        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_edit_profile.xml" value="0.176" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_edit_profile.xml" value="0.16799999999999998" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_location.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_location_more.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_profile_checkin.xml" value="0.12" />
-        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_setting.xml" value="0.10400000000000001" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_setting.xml" value="0.264" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/bottomsheet_choose_image.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/dialog_loading.xml" value="0.152" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/dialog_permisson_gallery.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/item_card.xml" value="0.1671875" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/item_nf.xml" value="0.176" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/layout_top_navigation_back.xml" value="0.171875" />

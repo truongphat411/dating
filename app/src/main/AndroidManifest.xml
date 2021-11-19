@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
 
     <application
@@ -28,6 +30,8 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".login.Login_Activity"  android:windowSoftInputMode="stateVisible"/>
         <activity android:name=".register.Register_Activity" android:windowSoftInputMode="stateVisible"/>
+        <activity android:name=".Activity_Location"/>
+        <activity android:name=".Activity_Location_More"/>
     </application>
 
 </manifest>

@@ -27,6 +27,7 @@ import retrofit2.Retrofit
 import java.util.ArrayList
 import com.application.dating.R
 import com.application.dating.api.ServiceBuilder
+import com.application.dating.model.Profile
 import kotlinx.android.synthetic.main.main_tags_fragment.*
 
 class Main_Tags_Fragment : Fragment() {
@@ -35,7 +36,7 @@ class Main_Tags_Fragment : Fragment() {
     private var adapter: CardStackAdapter? = null
     lateinit var iMyAPI : Dating_App_API
     private var cardStackView: CardStackView? = null
-    private var list: List<File_Image_Male> = ArrayList()
+    private var list: List<Profile> = ArrayList()
     private val conpositeDisposable = CompositeDisposable()
     private var progress : ProgressBar ?= null
     override fun onCreateView(
@@ -51,10 +52,10 @@ class Main_Tags_Fragment : Fragment() {
             override fun onCardDragging(direction: Direction, ratio: Float) {
                 Log.d(TAG, "onCardDragging: d=" + direction.name + " ratio=" + ratio)
             }
-
             override fun onCardSwiped(direction: Direction) {
                 Log.d(TAG, "onCardSwiped: p=" + manager!!.topPosition + " d=" + direction)
                 if (direction == Direction.Right) {
+
                     Toast.makeText(requireActivity(), "LIKE", Toast.LENGTH_SHORT).show()
                 }
                 if (direction == Direction.Top) {
@@ -67,7 +68,6 @@ class Main_Tags_Fragment : Fragment() {
                     Toast.makeText(requireActivity(), "NOPE", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onCardRewound() {
                 Log.d(TAG, "onCardRewound: " + manager!!.topPosition)
             }
@@ -75,7 +75,6 @@ class Main_Tags_Fragment : Fragment() {
             override fun onCardCanceled() {
                 Log.d(TAG, "onCardRewound: " + manager!!.topPosition)
             }
-
             override fun onCardAppeared(view: View, position: Int) {
                 val tv = view.findViewById<TextView>(R.id.item_name)
                 Log.d(TAG, "onCardAppeared: " + position + ", nama: " + tv.text)
@@ -143,12 +142,12 @@ class Main_Tags_Fragment : Fragment() {
             longitude = 105.9705111F,
             gender_requirement = "nữ",
             radius = 50,
-            age_range = 0,
+            age_range = 50,
             live_at = "null",
             is_status = false
         )
         conpositeDisposable.addAll(
-            iMyAPI.getImageMale(acc)
+            iMyAPI.getImageFemale(acc)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe ({s->
@@ -158,7 +157,7 @@ class Main_Tags_Fragment : Fragment() {
                     Toast.makeText(requireActivity(),t!!.message,Toast.LENGTH_SHORT).show()
                 }))
     }
-    private fun displayData(fim: List<File_Image_Male>) {
+    private fun displayData(fim: List<Profile>) {
         adapter = CardStackAdapter(requireActivity(), fim)
         cardStackView!!.layoutManager = manager
         cardStackView!!.adapter = adapter

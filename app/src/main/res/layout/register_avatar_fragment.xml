@@ -68,6 +68,7 @@
             android:layout_weight="1"
             />
     </LinearLayout>
+
     <Button
         android:id="@+id/btn_image"
         android:layout_width="match_parent"

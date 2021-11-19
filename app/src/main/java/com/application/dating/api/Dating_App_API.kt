@@ -15,7 +15,7 @@ interface Dating_App_API{
     fun LoginUser(@Body userData: Account): Observable<Account>
 
     @POST("api/register/")
-    fun RegisterUser(@Body userData: Account_Male): Observable<String>
+    fun RegisterUser(@Body userData: Account): Observable<String>
 
     @Multipart
     @POST("api/image/")
@@ -40,7 +40,12 @@ interface Dating_App_API{
     val getImageMale : Observable<List<File_Image_Male>>*/
 
     @POST("api/imagefemale/getimagefemale")
-    fun getImageMale(@Body userData: Account): Observable<List<File_Image_Male>>
+    fun getImageFemale(@Body userData: Account): Observable<List<Profile>>
+
+    @POST("api/imagefemale/getimagemale")
+    fun getImageMale(@Body userData: Account): Observable<List<Profile>>
+
+
 
     companion object{
         operator fun invoke(baseUrl : String) : Dating_App_API {
