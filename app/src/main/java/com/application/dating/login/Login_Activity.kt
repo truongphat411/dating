@@ -6,16 +6,19 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.application.dating.MainActivity
-import com.application.dating.model.Account_Male
 import com.application.dating.R
 import com.application.dating.register.Register_Activity
 import com.application.dating.api.Dating_App_API
 import com.application.dating.api.ServiceBuilder
-import com.application.dating.model.Account
+import com.application.dating.model.Taikhoan
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.login_activity.*
+import com.google.gson.Gson
+
+
+
 
 
 class Login_Activity : AppCompatActivity() {
@@ -32,37 +35,45 @@ class Login_Activity : AppCompatActivity() {
             overridePendingTransition(R.anim.activity_slide_in_right,R.anim.activity_slide_out_left)
         }
         btn_login.setOnClickListener{
-/*          val username : String = edt_email.editText?.text.toString().trim()
-            val password : String = edt_password.editText?.text.toString().trim()
-            val userInfo = Account(
-                username = username,
-                password = password
+          val email : String = edt_email.editText?.text.toString().trim()
+            val matkhau : String = edt_password.editText?.text.toString().trim()
+            val userInfo = Taikhoan(
+                email = email,
+                matkhau = matkhau
             )
             conpositeDisposable.addAll(iMyAPI.LoginUser(userInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({s ->
-                    startActivity(Intent(this@Login_Activity, MainActivity::class.java))
-                    overridePendingTransition(R.anim.activity_slide_in_right,R.anim.activity_slide_out_left)
-                    var id: Int? = s.id
-                    //MainActivity.name = s.name
-                    var dateofbirth: String?= s.dateofbirth
-                    var username: String?= s.username
-                    var password: String?= s.password
-                    var gender: String?= s.gender
-                    var latitude: Float?= s.latitude
-                    var longitude : Float? = s.longitude
-                    var gender_requirement: String?= s.gender_requirement
-                    var radius: Int?= s.radius
-                    var age_range: Int?= s.age_range
-                    var live_at: String?= s.live_at
-                    var is_status: Boolean?= s.is_status
-                    Toast.makeText(this@Login_Activity,s.toString(),Toast.LENGTH_SHORT).show()
+                    if(s.contains("User not existing in Database")){
+                        Toast.makeText(this@Login_Activity,"Tài khoản không tồn tại",Toast.LENGTH_SHORT).show()
+                    }else if (s.contains("Wrong Password")){
+                        Toast.makeText(this@Login_Activity,"Mật khẩu không đúng",Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        val gson = Gson()
+                        val acc = gson.fromJson(s,Taikhoan::class.java)
+                        MainActivity.id = acc.id
+                        MainActivity.ten = acc.ten
+                        MainActivity.ngaysinh = acc.ngaysinh
+                        MainActivity.email = acc.email
+                        MainActivity.gioitinh = acc.gioitinh
+                        MainActivity.gioithieubanthan = acc.gioithieubanthan
+                        MainActivity.quequan = acc.quequan
+                        MainActivity.dangsongtai = acc.dangsongtai
+                        MainActivity.is_trangthai = acc.is_trangthai
+                        MainActivity.is_xacminh = acc.is_xacminh
+                        MainActivity.bankinh = acc.bankinh
+                        MainActivity.sothich = acc.sothich
+                        startActivity(Intent(this@Login_Activity, MainActivity::class.java))
+                        overridePendingTransition(R.anim.activity_slide_in_right,R.anim.activity_slide_out_left)
+                        finish()
+                    }
                 },{t :Throwable? ->
                     Toast.makeText(this@Login_Activity,t!!.message,Toast.LENGTH_SHORT).show()
-                }))*/
-            startActivity(Intent(this@Login_Activity, MainActivity::class.java))
-            overridePendingTransition(R.anim.activity_slide_in_right,R.anim.activity_slide_out_left)
+                }))
+            /*startActivity(Intent(this@Login_Activity, MainActivity::class.java))
+            overridePendingTransition(R.anim.activity_slide_in_right,R.anim.activity_slide_out_left)*/
             }
         }
     override fun onStop() {

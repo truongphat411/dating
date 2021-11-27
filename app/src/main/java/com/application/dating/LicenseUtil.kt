@@ -1,5 +1,6 @@
 package com.application.dating
 
+import android.app.Activity
 import androidx.fragment.app.FragmentActivity
 import com.application.dating.R
 
@@ -13,9 +14,9 @@ internal object LicenseUtil {
      * @param activity current activity
      * @return license byte array
      */
-    fun getLicense(fragment: FragmentActivity): ByteArray? {
+    fun getLicense(activity : Activity): ByteArray? {
         try {
-            val licInput = fragment.resources.openRawResource(R.raw.regula)
+            val licInput = activity.resources.openRawResource(R.raw.regula)
             val available = licInput.available()
             val license = ByteArray(available)
             licInput.read(license)

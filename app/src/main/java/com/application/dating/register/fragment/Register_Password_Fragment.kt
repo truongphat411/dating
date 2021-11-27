@@ -17,12 +17,16 @@ class Register_Password_Fragment :Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(Register_ViewModel::class.java)
         viewModel.selectItem(70.0)
         view.btn_password.setOnClickListener{
-            viewModel.selectItem(90.0)
-            val fragment = Register_ID_Fragment()
+            viewModel.selectItem(100.0)
+            password = view.txt_password.text.toString()
+            val fragment = Register_Avatar_Fragment()
             val transaction = fragmentManager?.beginTransaction()
             transaction?.addToBackStack(null)
             transaction?.replace(R.id.frame_infomation,fragment)?.commit()
         }
         return view
+    }
+    companion object{
+        var password : String ?= null
     }
 }

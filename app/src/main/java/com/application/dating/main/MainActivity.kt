@@ -15,24 +15,24 @@ import kotlinx.android.synthetic.main.main_activity.*
 class MainActivity : AppCompatActivity() {
     companion object{
         var id: Int? = 0
-        var name: String? = null
-        var dateofbirth: String? = null
+        var ten: String? = null
+        var ngaysinh: String? = null
         var email: String? = null
-        var password: String?= null
-        var introduce_yourself: String? = null
-        var gender: String? = null
-        var latitude: Float?= 0f
-        var longitude : Float? = 0f
-        var gender_requirement: String? = null
-        var radius: Int? = 0
-        var desired_age: Int? = 0
-        var height: Int? = 0
-        var live_at: String? = null
-        var constellation: String? = null
-        var religion: String? = null
-        var is_status: Boolean? = false
-        var education: String?= null
-        var work: String?= null
+        var matkhau: String?= null
+        var gioithieubanthan: String? = null
+        var gioitinh: String? = null
+        var kinhdo: Float?= 0f
+        var vido : Float? = 0f
+        var gioitinhyeuthich: String? = null
+        var bankinh: Int? = 0
+        var dotuoitoithieu_yeuthich: Int? = 0
+        var dotuoitoida_yeuthich: Int? = 0
+        var dangsongtai: String? = null
+        var is_trangthai: Boolean? = false
+        var is_xacminh: Boolean? = false
+        var so_cccd : String ?= null
+        var quequan : String ?= null
+        var sothich : String ?= null
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

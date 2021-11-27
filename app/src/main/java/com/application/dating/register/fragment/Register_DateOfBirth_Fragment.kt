@@ -21,7 +21,7 @@ class Register_DateOfBirth_Fragment : Fragment (){
         viewModel.selectItem(20.0)
         view.btn_day_of_birth.setOnClickListener{
             txtdate = view.edt_year.text.toString() + "/" + view.edt_month.text.toString() + "/" + view.edt_day.text.toString()
-            viewModel.dateofbirth(txtdate.toString())
+            dateofbirth = txtdate
             viewModel.selectItem(40.0)
             val fragment = Register_Gender_Fragment()
             val transaction = fragmentManager?.beginTransaction()
@@ -29,5 +29,8 @@ class Register_DateOfBirth_Fragment : Fragment (){
             transaction?.replace(R.id.frame_infomation,fragment)?.commit()
         }
         return view
+    }
+    companion object{
+        var dateofbirth : String ?= null
     }
 }

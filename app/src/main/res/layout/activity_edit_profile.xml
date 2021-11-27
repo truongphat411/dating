@@ -14,7 +14,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
             android:background="@drawable/ic_chevron_left_black_24dp" />
-        <com.application.dating.customfonts.MyTextView_Roboto_Bold
+        <TextView
             android:id="@+id/toolbartag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
 
                         android:weightSum="10">
 
-                        <androidx.cardview.widget.CardView
+<!--                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="260dp"
                             android:layout_weight="4"
@@ -64,14 +64,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
-                                <TextView
+&lt;!&ndash;                                <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
                                     android:elevation="20dp"
                                     android:text="1"
                                     android:textSize="60dp"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold" />&ndash;&gt;
 
                                 <ImageView
                                     android:id="@+id/image_view_1"
@@ -95,7 +95,6 @@
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -318,7 +317,7 @@
                                         android:elevation="@dimen/_5dp" />
                                 </LinearLayout>
                             </RelativeLayout>
-                        </androidx.cardview.widget.CardView>
+                        </androidx.cardview.widget.CardView>-->
                     </LinearLayout>
                 </LinearLayout>
 
@@ -329,15 +328,17 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
 
-                    <com.application.dating.customfonts.MyTextView_Roboto_Bold
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:text="Giới thiệu về bản thân"
                         android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
 
                     <EditText
+                        android:id="@+id/edt_introduce"
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
                         android:background="@android:color/transparent"
@@ -350,15 +351,17 @@
                         android:layout_marginTop="2dp"
                         android:background="@color/colorAccent" />
 
-                    <com.application.dating.customfonts.MyTextView_Roboto_Bold
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="Đang sống tại"
+                        android:text="Quê quán"
                         android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
 
                     <EditText
+                        android:id="@+id/edt_city"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
@@ -371,13 +374,59 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="2dp"
                         android:background="@color/colorAccent" />
-                    <com.application.dating.customfonts.MyTextView_Roboto_Bold
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Đang sống tại"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+                    <EditText
+                        android:id="@+id/edt_countryside"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="bottom"
+                        android:hint="Tỉnh, Thành Phố"
+                        android:padding="@dimen/_5dp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/colorAccent" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Sở thích"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+                    <EditText
+                        android:id="@+id/edt_interests"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="bottom"
+                        android:hint="Sở thích"
+                        android:padding="@dimen/_5dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/colorAccent" />
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:text="Giới tính"
                         android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -393,7 +442,7 @@
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
                             android:text="Nam"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/red"
                             android:textSize="18dp" />
 
                         <Button

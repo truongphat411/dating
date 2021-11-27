@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -16,31 +17,40 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.application.dating.api.Dating_App_API
+import com.application.dating.api.ServiceBuilder
 import com.application.dating.login.Login_Activity
-import com.application.dating.model.Account
+import com.application.dating.model.Taikhoan
+import com.application.dating.register.UploadRequestBody
+import com.application.dating.register.fragment.Register_Avatar_Fragment
+import com.application.dating.register.getFileName
 import com.google.android.gms.location.*
+import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_location.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.util.*
 
-class Activity_Location : AppCompatActivity() {
+class Activity_Location : AppCompatActivity() ,UploadRequestBody.UploadCallback{
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     lateinit var iMyAPI : Dating_App_API
     var conpositeDisposable = CompositeDisposable()
     var PERMISSION_ID = 52
-    private var latitude : Float = 0.0F
-    private var longitude : Float = 0.0F
-    private var live_at : String ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-
+        iMyAPI = ServiceBuilder.getInstance().create(Dating_App_API::class.java)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
         imv_down.setOnClickListener {
             val intent = Intent(this, Activity_Location_More::class.java)
             startActivity(intent)
@@ -124,42 +134,14 @@ class Activity_Location : AppCompatActivity() {
                     if(location == null){
                         NewLocationData()
                     }else{
-                        var dialog = Dialog(this@Activity_Location)
-                        dialog.setContentView(R.layout.dialog_loading)
-                        dialog.show()
-                        val intent : Intent = intent
-                        val userInfo = Account(
-                         name = intent.getStringExtra("name"),
-                         dateofbirth =  intent.getStringExtra("dateofbirth"),
-                         username =  intent.getStringExtra("username"),
-                        password = intent.getStringExtra("password"),
-                         gender = intent.getStringExtra("gender"),
-                        latitude = location.latitude.toFloat(),
-                         longitude = location.longitude.toFloat(),
-                         gender_requirement = intent.getStringExtra("gender_requirement"),
-                         radius = 50,
-                         age_range = 30,
-                         live_at = getCityName(location.latitude,location.longitude),
-                         is_status = false
-                        )
-                        conpositeDisposable.addAll(iMyAPI.RegisterUser(userInfo)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({s ->
-                                if(s.contains("Register successfully")){
-                                    dialog.dismiss()
-                                    startActivity(Intent(this@Activity_Location, Login_Activity::class.java))
-                                    overridePendingTransition(R.anim.activity_slide_in_right,R.anim.activity_slide_out_left)
-                                    Toast.makeText(this@Activity_Location,"Đăng ký thành công",Toast.LENGTH_SHORT).show()
-                                    finish()
-                                }
-                            },{t :Throwable? ->
-                                dialog.dismiss()
-                                Toast.makeText(this@Activity_Location,t!!.message,Toast.LENGTH_SHORT).show()
-                            }))
-/*                        Toast.makeText(this@Activity_Location,"You Last Location is : Long: "+ location.longitude + " , Lat: "
-                                + location.latitude + "\n" + getCityName(location.latitude,location.longitude), Toast.LENGTH_LONG).show()*/
-
+        /*               Toast.makeText(this@Activity_Location,"You Last Location is : Long: "+ location.longitude + " , Lat: "
+                                + location.latitude + "\n" + getCityName(location.latitude,location.longitude), Toast.LENGTH_LONG).show()
+*/
+                        val intent = Intent(this,Activity_Setting::class.java)
+                        intent.putExtra("vido",location.latitude)
+                        intent.putExtra("kinhdo",location.longitude)
+                        startActivity(intent)
+                        finish()
                     }
                 }
             }else{
@@ -216,5 +198,9 @@ class Activity_Location : AppCompatActivity() {
         countryName = Adress.get(0).countryName
         Log.d("Debug:","Your City: " + cityName + " ; your Country " + countryName)
         return cityName
+    }
+
+    override fun onProgressUpdate(percentage: Int) {
+        progress_bar.progress = percentage
     }
 }

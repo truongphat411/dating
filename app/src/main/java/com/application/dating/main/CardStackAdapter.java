@@ -32,7 +32,6 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         this.items = items;
         this.context = context;
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,12 +43,12 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
        // holder.setData(items.get(position));
-        holder.name.setText(items.get(position).getName());
-        holder.age.setText(String.valueOf(items.get(position).getAge()));
-        holder.city.setText(items.get(position).getLive_at());
+        holder.name.setText(items.get(position).getTen());
+        holder.age.setText(String.valueOf(items.get(position).getTuoi()));
+        //holder.city.setText(items.get(position).getLive_at());
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        ImageRequest imageRequest = new ImageRequest(items.get(position).getImagepath(), new Response.Listener<Bitmap>() {
+        ImageRequest imageRequest = new ImageRequest(items.get(position).getDuongdan(), new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
                 holder.image.setImageBitmap(response);
@@ -57,7 +56,6 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         }, 0, 0, ImageView.ScaleType.CENTER_CROP, null, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
         });
         requestQueue.add(imageRequest);
@@ -71,13 +69,12 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
-        TextView name, age, city;
+        TextView name, age;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.item_image);
             name = itemView.findViewById(R.id.item_name);
             age = itemView.findViewById(R.id.item_age);
-            city = itemView.findViewById(R.id.item_city);
         }
     }
     public List<Profile> getItems() {

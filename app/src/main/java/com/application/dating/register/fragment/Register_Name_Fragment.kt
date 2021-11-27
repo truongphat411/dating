@@ -18,7 +18,7 @@ class Register_Name_Fragment : Fragment(){
         viewModel = ViewModelProvider(requireActivity()).get(Register_ViewModel::class.java)
         viewModel.selectItem(0.0)
         view.btn_name.setOnClickListener{
-            viewModel.name(view.txt_name.text.toString())
+            name = view.txt_name.text.toString()
             viewModel.selectItem(20.0)
             val fragment = Register_DateOfBirth_Fragment()
             val transaction = fragmentManager?.beginTransaction()
@@ -26,5 +26,8 @@ class Register_Name_Fragment : Fragment(){
             transaction?.replace(R.id.frame_infomation,fragment)?.commit()
         }
         return view
+    }
+    companion object{
+        var name : String ?= null
     }
 }

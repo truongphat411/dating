@@ -32,6 +32,9 @@
         <activity android:name=".register.Register_Activity" android:windowSoftInputMode="stateVisible"/>
         <activity android:name=".Activity_Location"/>
         <activity android:name=".Activity_Location_More"/>
+        <activity android:name=".Activity_Edit"/>
+        <activity android:name=".Activity_Setting"/>
+        <activity android:name=".main.Check_ID"/>
     </application>
 
 </manifest>

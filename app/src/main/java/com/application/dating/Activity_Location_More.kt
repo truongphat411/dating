@@ -1,6 +1,7 @@
 package com.application.dating
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,14 +15,23 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.application.dating.api.Dating_App_API
+import com.application.dating.api.ServiceBuilder
+import com.application.dating.login.Login_Activity
+import com.application.dating.model.Taikhoan
 import com.google.android.gms.location.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_location_more.*
 import java.util.*
 
 class Activity_Location_More : AppCompatActivity(){
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
+    var conpositeDisposable = CompositeDisposable()
     var PERMISSION_ID = 52
+    lateinit var iMyAPI : Dating_App_API
     private var latitude : Float = 0.0F
     private var longitude : Float = 0.0F
     private var live_at : String ?= null
@@ -29,6 +39,8 @@ class Activity_Location_More : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location_more)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        iMyAPI = ServiceBuilder.getInstance().create(Dating_App_API::class.java)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         imv_up.setOnClickListener{
             val intent = Intent(this,Activity_Location::class.java)
             startActivity(intent)
@@ -110,9 +122,12 @@ class Activity_Location_More : AppCompatActivity(){
                     if(location == null){
                         NewLocationData()
                     }else{
-                        Log.d("Debug:" ,"Your Location:"+ location.longitude)
-                        Toast.makeText(this@Activity_Location_More,"You Last Location is : Long: "+ location.longitude + " , Lat: "
-                                + location.latitude + "\n" + getCityName(location.latitude,location.longitude), Toast.LENGTH_LONG).show()
+                        val intent = Intent(this,Activity_Setting::class.java)
+                        intent.putExtra("vido",location.latitude)
+                        intent.putExtra("kinhdo",location.longitude)
+                        startActivity(intent)
+/*                        Toast.makeText(this@Activity_Location,"You Last Location is : Long: "+ location.longitude + " , Lat: "
+                                + location.latitude + "\n" + getCityName(location.latitude,location.longitude), Toast.LENGTH_LONG).show()*/
 
                     }
                 }

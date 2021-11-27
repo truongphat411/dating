@@ -38,9 +38,10 @@
             android:padding="14dp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
-            android:text="Nam"
+            android:text="nam"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:textAllCaps="false"
             app:drawableStartCompat="@drawable/ic_boy" />
 
         <TextView
@@ -49,17 +50,18 @@
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_below="@+id/txt_gender_male"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:background="@drawable/custom_bg_textview"
             android:drawablePadding="14dp"
             android:padding="14dp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
-            android:text="Nữ"
+            android:text="nữ"
+            android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:drawableStartCompat="@drawable/ic_girl"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"/>
+            app:drawableStartCompat="@drawable/ic_girl" />
     </RelativeLayout>
 <!--
     <TextView

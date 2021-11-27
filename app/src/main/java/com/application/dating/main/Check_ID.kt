@@ -1,7 +1,6 @@
-package com.application.dating.register.fragment
+package com.application.dating.main
 
-import android.content.Context
-import android.content.ContextWrapper
+import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -9,21 +8,19 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.util.Base64
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory.create
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.application.dating.R
 import com.application.dating.LicenseUtil.getLicense
 import com.application.dating.register.Register_ViewModel
+import com.application.dating.register.fragment.*
 import com.regula.documentreader.api.DocumentReader
 import com.regula.documentreader.api.completions.IDocumentReaderCompletion
 import com.regula.documentreader.api.completions.IDocumentReaderPrepareCompletion
@@ -34,18 +31,14 @@ import com.regula.documentreader.api.enums.eVisualFieldType
 import com.regula.documentreader.api.errors.DocumentReaderException
 import com.regula.documentreader.api.params.DocReaderConfig
 import com.regula.documentreader.api.results.DocumentReaderResults
-import io.reactivex.Flowable.just
-import kotlinx.android.synthetic.main.register_id_fragment.*
-import kotlinx.android.synthetic.main.register_id_fragment.view.*
+import kotlinx.android.synthetic.main.check_id_fragment.*
+import kotlinx.android.synthetic.main.check_id_fragment.view.*
+import org.json.JSONObject
 import java.io.*
 import java.util.*
-import io.reactivex.android.schedulers.AndroidSchedulers
-
-import io.reactivex.schedulers.Schedulers
-import java.lang.Exception
 
 
-class Register_ID_Fragment : Fragment(){
+class Check_ID : AppCompatActivity(){
     lateinit var viewModel: Register_ViewModel
     private var sharedPreferences: SharedPreferences? = null
     private var doRfid = false
@@ -56,13 +49,11 @@ class Register_ID_Fragment : Fragment(){
         private const val MY_SHARED_PREFS = "MySharedPrefs"
         lateinit var encodeDocumentString : String
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.register_id_fragment,container,false)
-        viewModel = ViewModelProvider(requireActivity()).get(Register_ViewModel::class.java)
-        viewModel.selectItem(90.0)
-        sharedPreferences = requireActivity().getSharedPreferences(MY_SHARED_PREFS, AppCompatActivity.MODE_PRIVATE)
-        initView(view)
-        return view
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.check_id_fragment)
+        sharedPreferences = getSharedPreferences(MY_SHARED_PREFS, AppCompatActivity.MODE_PRIVATE)
+        initView()
     }
     override fun onPause() {
         super.onPause()
@@ -101,7 +92,7 @@ class Register_ID_Fragment : Fragment(){
                     createImageBrowsingRequest()
                 } else {
                     Toast.makeText(
-                        requireActivity(),
+                        this@Check_ID,
                         "Permission required, to browse images",
                         Toast.LENGTH_LONG
                     ).show()
@@ -109,13 +100,13 @@ class Register_ID_Fragment : Fragment(){
             }
         }
     }
-    private fun initView(view : View) {
-        view.btn_choose!!.setOnClickListener { _: View? ->
+    private fun initView() {
+        btn_choose!!.setOnClickListener { _: View? ->
             if (!DocumentReader.Instance().documentReaderIsReady) {
                 val initDialog = showDialog("Vui lòng chờ....")
                 //preparing database files, it will be downloaded from network only one time and stored on user device
                 DocumentReader.Instance().prepareDatabase(
-                    requireActivity(),
+                    this@Check_ID,
                     "Full",
                     object : IDocumentReaderPrepareCompletion {
                         override fun onPrepareProgressChanged(progress: Int) {
@@ -126,12 +117,12 @@ class Register_ID_Fragment : Fragment(){
                             error: DocumentReaderException?
                         ) {
                             if (status) {
-                                initDialog.setTitle("Initializing")
+                                initDialog.setTitle("Vui lòng chờ....")
                                 initializeReader(initDialog)
                             } else {
                                 initDialog.dismiss()
                                 Toast.makeText(
-                                    requireActivity(),
+                                    this@Check_ID,
                                     "Prepare DB failed:$error",
                                     Toast.LENGTH_LONG
                                 ).show()
@@ -142,30 +133,73 @@ class Register_ID_Fragment : Fragment(){
             if (!DocumentReader.Instance().documentReaderIsReady) return@setOnClickListener
             clearResults()
             //starting video processing
-            DocumentReader.Instance().showScanner(requireActivity(), completion)
+            DocumentReader.Instance().showScanner(this@Check_ID, completion)
         }
-        view.btn_id.setOnClickListener {
-            viewModel.selectItem(100.0)
-            val fragment = Register_Avatar_Fragment()
-            val transaction = fragmentManager?.beginTransaction()
-            transaction?.addToBackStack(null)
-            transaction?.replace(R.id.frame_infomation,fragment)?.commit()
+        btn_id.setOnClickListener {
+
         }
     }
+    fun check(){
+        var dialog = Dialog(this@Check_ID)
+        dialog.setContentView(R.layout.dialog_loading)
+        dialog.show()
+        val stringRequest = object : StringRequest(
+            Request.Method.POST,
+            "https://api-us.faceplusplus.com/facepp/v3/compare",
+            Response.Listener { response ->
+                val obj = JSONObject(response.toString())
+                val confidence: Float = obj.getString("confidence").toFloat()
+                if (response != null) {
+                    if (confidence > 70) {
+                        dialog.dismiss()
+                        Toast.makeText(this@Check_ID,"Hình ảnh hợp lệ",Toast.LENGTH_SHORT).show()
+                        finish()
+                    } else {
+                        dialog.dismiss()
+                        Toast.makeText(this@Check_ID,"Hình ảnh không hợp lệ",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            },
+            Response.ErrorListener { error ->
+                dialog.dismiss()
+                Toast.makeText(
+                    this@Check_ID,
+                    "" + error.message.toString(),
+                    Toast.LENGTH_LONG
+                ).show()
+            }) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params["api_key"] = "8NlrUwBlGYK3m8x5SMyivPzTFiA6sbjn"
+                params["api_secret"] = "Z3D_LsTN1TfEDOHvQMxLwBhoAvfG6A0v"
+                //params["image_base64_1"] = encodeString
+                params["image_base64_2"] = encodeDocumentString
+                return params
+            }
+        }
+        val requestQueue = Volley.newRequestQueue(this@Check_ID)
+        requestQueue.add(stringRequest)
+    }
+    private fun encodeBitmapImage(bitmap: Bitmap){
+        val byteArrayOutputStream : ByteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream)
+        val byteofimage = byteArrayOutputStream.toByteArray()
+        //encodeString = android.util.Base64.encodeToString(byteofimage,Base64.DEFAULT)
+    }
     private fun initializeReader(initDialog: AlertDialog) {
-        val config = DocReaderConfig(getLicense(requireActivity()))
+        val config = DocReaderConfig(getLicense(this@Check_ID))
         config.isLicenseUpdate = true
 
         DocumentReader.Instance().initializeReader(
-            requireActivity(),
+            this,
             config
         ) { success, error ->
             if (initDialog.isShowing) {
                 initDialog.dismiss()
-                DocumentReader.Instance().showScanner(requireActivity(), completion)
+                DocumentReader.Instance().showScanner(this, completion)
             }
             if (!success) { //Initialization was not successful
-                Toast.makeText(requireActivity(), "Init failed:$error", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Init failed:$error", Toast.LENGTH_LONG).show()
                 return@initializeReader
             }
             setupCustomization()
@@ -191,7 +225,7 @@ class Register_ID_Fragment : Fragment(){
             if (doRfid && results != null && results.chipPage != 0) {
                 //starting chip reading
                 DocumentReader.Instance()
-                    .startRFIDReader(requireActivity()) { rfidAction, results, _ ->
+                    .startRFIDReader(this) { rfidAction, results, _ ->
                         if (rfidAction == DocReaderAction.COMPLETE || rfidAction == DocReaderAction.CANCEL) {
                             displayResults(results)
                         }
@@ -202,15 +236,15 @@ class Register_ID_Fragment : Fragment(){
         } else {
             //something happened before all results were ready
             if (action == DocReaderAction.CANCEL) {
-                Toast.makeText(requireActivity(), "Scanning was cancelled", Toast.LENGTH_LONG)
+                Toast.makeText(this, "Scanning was cancelled", Toast.LENGTH_LONG)
                     .show()
             } else if (action == DocReaderAction.ERROR) {
-                Toast.makeText(requireActivity(), "Error:$error", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Error:$error", Toast.LENGTH_LONG).show()
             }
         }
     }
     private fun showDialog(msg: String): AlertDialog {
-        val dialog = AlertDialog.Builder(requireActivity())
+        val dialog = AlertDialog.Builder(this)
         val dialogView = layoutInflater.inflate(R.layout.simple_dialog, null)
         dialog.setTitle(msg)
         dialog.setView(dialogView)
@@ -223,9 +257,9 @@ class Register_ID_Fragment : Fragment(){
             val portrait = results.getGraphicFieldImageByType(eGraphicFieldType.GF_PORTRAIT)
             val name = results.getTextFieldValueByType(eVisualFieldType.FT_SURNAME_AND_GIVEN_NAMES)
             if (name != null && portrait != null) {
-                view?.txt_message?.visibility = View.GONE
+                txt_message?.visibility = View.GONE
             }else{
-                view?.txt_message?.visibility = View.VISIBLE
+                txt_message?.visibility = View.VISIBLE
             }
             // through all text fields
             if (results.textResult != null) {
@@ -250,12 +284,6 @@ class Register_ID_Fragment : Fragment(){
             }
         }
     }
-    private fun encodeBitmapImage(bitmap: Bitmap){
-        val byteArrayOutputStream : ByteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream)
-        val byteofimage = byteArrayOutputStream.toByteArray()
-        encodeDocumentString = android.util.Base64.encodeToString(byteofimage, Base64.DEFAULT)
-    }
     private fun clearResults() {
         documentImageIv!!.setImageResource(R.drawable.ic_id)
     }
@@ -274,7 +302,7 @@ class Register_ID_Fragment : Fragment(){
 
     // loads bitmap from uri
     private fun getBitmap(selectedImage: Uri?, targetWidth: Int, targetHeight: Int): Bitmap? {
-        val resolver = requireActivity().contentResolver
+        val resolver = contentResolver
         var `is`: InputStream? = null
         try {
             `is` = resolver.openInputStream(selectedImage!!)

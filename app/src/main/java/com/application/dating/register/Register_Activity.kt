@@ -16,7 +16,7 @@ class Register_Activity : AppCompatActivity(){
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         setContentView(R.layout.register_activity)
         viewModel = ViewModelProvider(this@Register_Activity).get(Register_ViewModel::class.java)
-        viewModel.selectItem.observe(this , Observer {
+        viewModel.selectItem.observe(this , {
             animate_progress_bar.setProgressPercentage(it,true)
         })
         supportFragmentManager.beginTransaction().add(R.id.frame_infomation,

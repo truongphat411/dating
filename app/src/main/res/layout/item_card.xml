@@ -40,13 +40,13 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"/>
 
-        <TextView
+<!--        <TextView
             android:id="@+id/item_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textColor="@android:color/white"
-            android:textSize="20sp"/>
+            android:textSize="20sp"/>-->
 
     </LinearLayout>
 
