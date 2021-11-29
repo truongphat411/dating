@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.application.dating.main.fragment.Main_Message_Fragment
 
-import com.application.dating.main.fragment.Main_NewsFeed_Fragment
 import com.application.dating.main.fragment.Main_PersonalPage_Fragment
 import com.application.dating.main.fragment.Main_Tags_Fragment
 import kotlinx.android.synthetic.main.main_activity.*
@@ -38,15 +37,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        val news_feed = Main_NewsFeed_Fragment()
         val tags = Main_Tags_Fragment()
         val message = Main_Message_Fragment()
         val profile = Main_PersonalPage_Fragment()
 
-        setCurrentFragment(news_feed)
+        setCurrentFragment(tags)
         bottom_navigation.setOnNavigationItemSelectedListener{
             when(it.itemId){
-                R.id.ic_home -> setCurrentFragment(news_feed)
+                //R.id.ic_home -> setCurrentFragment(news_feed)
                 R.id.ic_tags -> setCurrentFragment(tags)
                 R.id.ic_message -> setCurrentFragment(message)
                 R.id.ic_profile -> setCurrentFragment(profile)

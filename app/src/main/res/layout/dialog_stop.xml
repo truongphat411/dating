@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    android:orientation="vertical"
+    android:background="@drawable/bg_dialog_permisson">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xác nhận"
+        android:padding="12dp"
+        android:gravity="center"
+        android:fontFamily="@font/opensans_bold"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ngừng tìm kiếm"
+            android:gravity="center"
+            android:fontFamily="@font/opensans_light"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/txt_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancle"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/bg_bottom_dialog_permission"
+            android:fontFamily="@font/opensans_bold"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            />
+        <TextView
+            android:id="@+id/txt_okay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OKAY"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/bg_bottom_dialog_permission"
+            android:fontFamily="@font/opensans_bold"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            />
+    </LinearLayout>
+</LinearLayout>

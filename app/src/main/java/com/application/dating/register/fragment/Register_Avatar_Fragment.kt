@@ -44,14 +44,10 @@ import java.io.*
 
 class Register_Avatar_Fragment : Fragment(),UploadRequestBody.UploadCallback{
     lateinit var viewModel: Register_ViewModel
-    private val CAMERA_PERMISSION_CODE = 123
     private val STORAGE_PERMISSION_CODE = 113
     lateinit var bitmap : Bitmap
-    lateinit var  filePath : String
     lateinit var iMyAPI : Dating_App_API
     private var conpositeDisposable = CompositeDisposable()
-    lateinit var encodeString : String
-    lateinit var jsonObject : JSONObject
     lateinit var propress : ProgressBar
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,8 +103,21 @@ class Register_Avatar_Fragment : Fragment(),UploadRequestBody.UploadCallback{
             matkhau = Register_Password_Fragment.password,
             email = Register_Email_Fragment.email,
             gioitinh = Register_Gender_Fragment.gender,
-            ngaysinh = Register_DateOfBirth_Fragment.dateofbirth
-                    )
+            ngaysinh = Register_DateOfBirth_Fragment.dateofbirth,
+            is_trangthai = false,
+            dotuoitoida_yeuthich = 0,
+            dotuoitoithieu_yeuthich = 0,
+            bankinh = 0,
+            kinhdo = 0.0F,
+            vido = 0.0F,
+            sothich = "",
+            gioithieubanthan = "",
+            gioitinhyeuthich = "",
+            quequan = "",
+            dangsongtai = "",
+            is_xacminh = false,
+            so_cccd = ""
+        )
             conpositeDisposable.addAll(iMyAPI.RegisterUser(userInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
