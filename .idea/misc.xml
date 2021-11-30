@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ProjectSample/dating/app/src/main/res/layout/activity_fake_login_test.xml" value="0.2033514492753623" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/drawable/button_bg_color.xml" value="0.13177083333333334" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/drawable/button_bg_color_2.xml" value="0.13177083333333334" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/drawable/button_bg_pressed.xml" value="0.13177083333333334" />
@@ -93,7 +94,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

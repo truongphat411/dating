@@ -17,15 +17,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
 import com.application.dating.R
-import com.application.dating.model.Taikhoan
+import com.application.dating.chat.models.UserChat
 import kotlinx.android.synthetic.main.fragment_users.view.*
 
 
 class UsersFragment : Fragment() {
     private var userAdapter: UserAdapter? = null
-    private var mUsers: MutableList<Taikhoan>? = null
+    private var mUsers: MutableList<UserChat>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,7 +61,6 @@ class UsersFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 searchUsers(s.toString().toLowerCase())
             }
-
         })
     }
 
@@ -82,7 +80,7 @@ class UsersFragment : Fragment() {
                 mUsers?.clear()
 
                 for (snapshot: DataSnapshot in dataSnapshot.children){
-                    val user = snapshot.getValue(Taikhoan::class.java)
+                    val user = snapshot.getValue(UserChat::class.java)
 
                     assert(user != null)
                     assert(fuser != null)
@@ -114,7 +112,7 @@ class UsersFragment : Fragment() {
                 if (searchUsers.text.toString().equals("")){
                     mUsers?.clear()
                     for (snapshot: DataSnapshot in dataSnapshot.children){
-                        val user = snapshot.getValue(Taikhoan::class.java)
+                        val user = snapshot.getValue(UserChat::class.java)
 
                         if (!user?.id!!.equals(fuser?.uid)){
                             mUsers?.add(user!!)

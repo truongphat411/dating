@@ -15,10 +15,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.application.dating.R
 import com.application.dating.chat.models.Chat
-import com.application.dating.model.Taikhoan
+import com.application.dating.chat.models.UserChat
 import kotlinx.android.synthetic.main.user_item.view.*
 
-class UserAdapter(val context: Context, val mUsers: MutableList<Taikhoan>, val isChat: Boolean): RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class UserAdapter(val context: Context, val mUsers: MutableList<UserChat>, val isChat: Boolean): RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     var theLastMessage: String? = null
 

@@ -2,6 +2,7 @@ package com.application.dating.chat
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -10,27 +11,31 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.application.dating.chat.models.Chat
-import com.application.dating.model.Taikhoan
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import java.util.*
 import com.application.dating.R
+import com.application.dating.chat.models.UserChat
 import kotlinx.android.synthetic.main.messager_activity.*
 
 class MessagerActivity : AppCompatActivity() {
 
     var firebaseUser: FirebaseUser? = null
     lateinit var reference: DatabaseReference
-
+    val TAG = "MTL"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.messager_activity)
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
 
+        Log.d(TAG, "onCreate: " )
         firebaseUser = FirebaseAuth.getInstance().currentUser
+        firebaseUser?.let {
+            Log.d(TAG, "onCreate: " + it.uid)
+        }
 
         // Mendapatkan List Pengguna
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser?.uid!!)
@@ -40,7 +45,7 @@ class MessagerActivity : AppCompatActivity() {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user = dataSnapshot.getValue(Taikhoan::class.java)
+                val user = dataSnapshot.getValue(UserChat::class.java)
                 //username.text = user?.username
                 profile_image.setImageResource(R.mipmap.ic_launcher)
 //                if (user?.imageURL.equals("default")){

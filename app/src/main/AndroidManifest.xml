@@ -18,9 +18,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dating_App"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".chat.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".chat.MessagerActivity"
+            android:exported="false" />
         <activity
             android:name=".chat.FakeLoginTestActivity"
             android:exported="false" />
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"

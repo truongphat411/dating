@@ -13,13 +13,13 @@ import com.google.firebase.database.*
 import com.application.dating.R
 import com.application.dating.chat.models.Chatlist
 import com.application.dating.chat.models.Token
-import com.application.dating.model.Taikhoan
+import com.application.dating.chat.models.UserChat
 import com.google.firebase.installations.FirebaseInstallations
 import kotlinx.android.synthetic.main.fragment_chat.*
 
 class ChatFragment : Fragment() {
     lateinit var userAdapter: UserAdapter
-    lateinit var mUsers: ArrayList<Taikhoan>
+    lateinit var mUsers: ArrayList<UserChat>
 
     var firebaseUser: FirebaseUser? = null
     lateinit var reference: DatabaseReference
@@ -86,7 +86,7 @@ class ChatFragment : Fragment() {
                 mUsers?.clear()
                 // ambil data semua chat
                 for (snapshot in dataSnapshot.children){
-                    val user = snapshot.getValue(Taikhoan::class.java)
+                    val user = snapshot.getValue(UserChat::class.java)
 
                     // mencari data chat yang ada uid current user
                     for (chatlist in usersList){
