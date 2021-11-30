@@ -16,14 +16,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.login_activity.*
 import com.google.gson.Gson
-
-
-
-
-
 class Login_Activity : AppCompatActivity() {
     lateinit var iMyAPI : Dating_App_API
-    var conpositeDisposable = CompositeDisposable()
+    var compositeDisposable = CompositeDisposable()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -41,7 +36,7 @@ class Login_Activity : AppCompatActivity() {
                 email = email,
                 matkhau = matkhau
             )
-            conpositeDisposable.addAll(iMyAPI.LoginUser(userInfo)
+            compositeDisposable.addAll(iMyAPI.LoginUser(userInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({s ->
@@ -77,7 +72,7 @@ class Login_Activity : AppCompatActivity() {
             }
         }
     override fun onStop() {
-        conpositeDisposable.clear()
+        compositeDisposable.clear()
         super.onStop()
     }
 }

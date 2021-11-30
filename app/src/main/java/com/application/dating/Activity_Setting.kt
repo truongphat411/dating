@@ -174,6 +174,7 @@ class Activity_Setting : AppCompatActivity() {
         val retrofitData = retrofitBuilder.updatesearch(MainActivity.id!!, acc)
         retrofitData.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
+                MainActivity.is_trangthai = true
                 dialog.dismiss()
                 finish()
                 Toast.makeText(this@Activity_Setting, "thành công", Toast.LENGTH_SHORT).show()

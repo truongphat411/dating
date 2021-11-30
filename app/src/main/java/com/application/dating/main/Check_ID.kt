@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -19,8 +20,15 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.application.dating.R
 import com.application.dating.LicenseUtil.getLicense
+import com.application.dating.MainActivity
+import com.application.dating.api.Dating_App_API
+import com.application.dating.api.ServiceBuilder
+import com.application.dating.main.fragment.Main_PersonalPage_Fragment
+import com.application.dating.main.fragment.Main_Tags_Fragment
+import com.application.dating.model.Taikhoan
 import com.application.dating.register.Register_ViewModel
 import com.application.dating.register.fragment.*
+import com.google.gson.Gson
 import com.regula.documentreader.api.DocumentReader
 import com.regula.documentreader.api.completions.IDocumentReaderCompletion
 import com.regula.documentreader.api.completions.IDocumentReaderPrepareCompletion
@@ -31,6 +39,9 @@ import com.regula.documentreader.api.enums.eVisualFieldType
 import com.regula.documentreader.api.errors.DocumentReaderException
 import com.regula.documentreader.api.params.DocReaderConfig
 import com.regula.documentreader.api.results.DocumentReaderResults
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.check_id_fragment.*
 import kotlinx.android.synthetic.main.check_id_fragment.view.*
 import org.json.JSONObject
@@ -43,16 +54,20 @@ class Check_ID : AppCompatActivity(){
     private var sharedPreferences: SharedPreferences? = null
     private var doRfid = false
     private var loadingDialog: AlertDialog? = null
+    lateinit var iMyAPI : Dating_App_API
+    private var conpositeDisposable = CompositeDisposable()
     companion object {
         private const val REQUEST_BROWSE_PICTURE = 11
         private const val PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 22
         private const val MY_SHARED_PREFS = "MySharedPrefs"
-        lateinit var encodeDocumentString : String
+        lateinit var documentImage : Bitmap
+        lateinit var numberDoccument : String
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.check_id_fragment)
         sharedPreferences = getSharedPreferences(MY_SHARED_PREFS, AppCompatActivity.MODE_PRIVATE)
+        iMyAPI = ServiceBuilder.getInstance().create(Dating_App_API::class.java)
         initView()
     }
     override fun onPause() {
@@ -136,7 +151,7 @@ class Check_ID : AppCompatActivity(){
             DocumentReader.Instance().showScanner(this@Check_ID, completion)
         }
         btn_id.setOnClickListener {
-
+            check()
         }
     }
     fun check(){
@@ -151,9 +166,7 @@ class Check_ID : AppCompatActivity(){
                 val confidence: Float = obj.getString("confidence").toFloat()
                 if (response != null) {
                     if (confidence > 70) {
-                        dialog.dismiss()
-                        Toast.makeText(this@Check_ID,"Hình ảnh hợp lệ",Toast.LENGTH_SHORT).show()
-                        finish()
+                        confirm(dialog)
                     } else {
                         dialog.dismiss()
                         Toast.makeText(this@Check_ID,"Hình ảnh không hợp lệ",Toast.LENGTH_SHORT).show()
@@ -172,24 +185,44 @@ class Check_ID : AppCompatActivity(){
                 val params = HashMap<String, String>()
                 params["api_key"] = "8NlrUwBlGYK3m8x5SMyivPzTFiA6sbjn"
                 params["api_secret"] = "Z3D_LsTN1TfEDOHvQMxLwBhoAvfG6A0v"
-                //params["image_base64_1"] = encodeString
-                params["image_base64_2"] = encodeDocumentString
+                params["image_base64_1"] = encodeBitmapImage(Main_PersonalPage_Fragment.bitmap!!)
+                params["image_base64_2"] = encodeBitmapImage(documentImage)
                 return params
             }
         }
         val requestQueue = Volley.newRequestQueue(this@Check_ID)
         requestQueue.add(stringRequest)
     }
-    private fun encodeBitmapImage(bitmap: Bitmap){
-        val byteArrayOutputStream : ByteArrayOutputStream = ByteArrayOutputStream()
+    private fun encodeBitmapImage(bitmap: Bitmap) : String{
+        val byteArrayOutputStream  = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream)
         val byteofimage = byteArrayOutputStream.toByteArray()
-        //encodeString = android.util.Base64.encodeToString(byteofimage,Base64.DEFAULT)
+        val encodeString = Base64.encodeToString(byteofimage,Base64.DEFAULT)
+        return encodeString
+    }
+    private fun confirm(dialog: Dialog) {
+        val userInfo = Taikhoan(
+            so_cccd = numberDoccument,
+            is_xacminh = true
+        )
+        conpositeDisposable.addAll(iMyAPI.comfirm(MainActivity.id!!,userInfo)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({s ->
+                    val gson = Gson()
+                    val acc = gson.fromJson(s, Taikhoan::class.java)
+                    MainActivity.is_xacminh = acc.is_xacminh
+                    dialog.dismiss()
+                    Toast.makeText(this@Check_ID,"Tài khoản đã được xác minh",Toast.LENGTH_SHORT).show()
+                    finish()
+            },{t :Throwable? ->
+                dialog.dismiss()
+                Toast.makeText(this,t!!.message,Toast.LENGTH_SHORT).show()
+            }))
     }
     private fun initializeReader(initDialog: AlertDialog) {
         val config = DocReaderConfig(getLicense(this@Check_ID))
         config.isLicenseUpdate = true
-
         DocumentReader.Instance().initializeReader(
             this,
             config
@@ -256,8 +289,10 @@ class Check_ID : AppCompatActivity(){
         if (results != null) {
             val portrait = results.getGraphicFieldImageByType(eGraphicFieldType.GF_PORTRAIT)
             val name = results.getTextFieldValueByType(eVisualFieldType.FT_SURNAME_AND_GIVEN_NAMES)
+            val number = results.getTextFieldValueByType(eVisualFieldType.FT_DOCUMENT_NUMBER)
             if (name != null && portrait != null) {
                 txt_message?.visibility = View.GONE
+                numberDoccument = number
             }else{
                 txt_message?.visibility = View.VISIBLE
             }
@@ -268,20 +303,17 @@ class Check_ID : AppCompatActivity(){
                     Log.d("MainActivity", """$value """.trimIndent())
                 }
             }
-            var documentImage =
+             documentImage =
                 results.getGraphicFieldImageByType(eGraphicFieldType.GF_DOCUMENT_IMAGE)
-            if (documentImage != null) {
-                val aspectRatio = documentImage.width.toDouble() / documentImage.height
-                    .toDouble()
-                documentImage = Bitmap.createScaledBitmap(
-                    documentImage,
-                    (480 * aspectRatio).toInt(),
-                    480,
-                    false
-                )
-                documentImageIv!!.setImageBitmap(documentImage)
-                encodeBitmapImage(documentImage)
-            }
+            val aspectRatio = documentImage.width.toDouble() / documentImage.height
+                .toDouble()
+            documentImage = Bitmap.createScaledBitmap(
+                documentImage,
+                (480 * aspectRatio).toInt(),
+                480,
+                false
+            )
+            documentImageIv!!.setImageBitmap(documentImage)
         }
     }
     private fun clearResults() {

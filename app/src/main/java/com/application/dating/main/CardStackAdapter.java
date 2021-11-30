@@ -45,23 +45,9 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
        // holder.setData(items.get(position));
         holder.name.setText(items.get(position).getTen());
         holder.age.setText(String.valueOf(items.get(position).getTuoi()));
-        //holder.city.setText(items.get(position).getLive_at());
-
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        ImageRequest imageRequest = new ImageRequest(items.get(position).getDuongdan(), new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap response) {
-                holder.image.setImageBitmap(response);
-            }
-        }, 0, 0, ImageView.ScaleType.CENTER_CROP, null, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        requestQueue.add(imageRequest);
-
+        String path = "http://192.168.1.8:8086";
+        Glide.with(context).load(path+items.get(position).getDuongdan()).placeholder(R.drawable.monkey).into(holder.image);
     }
-
     @Override
     public int getItemCount() {
         return items.size();

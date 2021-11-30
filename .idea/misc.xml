@@ -42,23 +42,26 @@
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/drawable/roundbtn.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/drawable/seek_bar_thumb.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_checkin.xml" value="0.171875" />
-        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_edit_profile.xml" value="0.264" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_edit_profile.xml" value="0.10400000000000001" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_location.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_location_more.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_profile_checkin.xml" value="0.12" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/activity_setting.xml" value="0.152" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/bottomsheet_choose_image.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/check_id_fragment.xml" value="0.21510416666666668" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/dialog_loading.xml" value="0.152" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/dialog_permisson_gallery.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/dialog_stop.xml" value="0.12" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/item_card.xml" value="0.1671875" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/item_nf.xml" value="0.176" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/layout_top_navigation_back.xml" value="0.171875" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/login_activity.xml" value="0.19972826086956522" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/main_activity.xml" value="0.11200000000000002" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/main_newsfeed_fragment.xml" value="0.2" />
-        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/main_profile_fragment.xml" value="0.4" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/main_profile_fragment.xml" value="0.136" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/main_tags_fragment.xml" value="0.176" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/match.xml" value="0.15052083333333333" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/register_activity.xml" value="0.2223731884057971" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/register_avatar_fragment.xml" value="0.152" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/register_dateofbirth_fragment.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/register_email_fragment.xml" value="0.22083333333333333" />
@@ -68,6 +71,7 @@
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/register_password_fragment.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/register_username_fragment.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/layout/simple_dialog.xml" value="0.15052083333333333" />
+        <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating/app/src/main/res/menu/bottom_menu.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating_App/app/src/main/res/drawable/bottom_shape_navigation.xml" value="0.1" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating_App/app/src/main/res/drawable/button_bg_color.xml" value="0.12037037037037036" />
         <entry key="..\:/Users/BUN BO/AndroidStudioProjects/Dating_App/app/src/main/res/drawable/button_bg_pressed.xml" value="0.19444444444444445" />
