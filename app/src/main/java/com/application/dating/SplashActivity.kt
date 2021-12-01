@@ -24,8 +24,8 @@ class SplashActivity : AppCompatActivity(){
             override fun onTransitionChange(motionLayout: MotionLayout?, startId: Int, endId: Int, progress: Float) {}
 
             override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
-//                startActivity(Intent(this@SplashActivity, Login_Activity::class.java))
-                startActivity(Intent(this@SplashActivity, FakeLoginTestActivity::class.java))
+                startActivity(Intent(this@SplashActivity, Login_Activity::class.java))
+//                startActivity(Intent(this@SplashActivity, FakeLoginTestActivity::class.java))
                 overridePendingTransition(R.anim.activity_slide_in_right, R.anim.activity_slide_out_left)
                 finish()
             }

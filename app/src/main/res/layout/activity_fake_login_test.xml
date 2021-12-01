@@ -7,9 +7,20 @@
     tools:context=".chat.FakeLoginTestActivity">
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/btnLogin"
         android:text="Login"
         />
+
+    <Button
+        android:id="@+id/btnChat"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Chat"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+        tools:layout_editor_absoluteX="0dp"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

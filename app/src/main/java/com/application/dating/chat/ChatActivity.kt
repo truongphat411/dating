@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.dating.R
 import com.application.dating.chat.models.Chat
+import com.application.dating.chat.models.UserChat
 import com.application.dating.model.Taikhoan
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -33,7 +34,7 @@ class ChatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_message)
 
         setSupportActionBar(toolbar)
-        supportActionBar?.title = ""
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 //        toolbar.setNavigationOnClickListener {
@@ -47,9 +48,11 @@ class ChatActivity : AppCompatActivity() {
         layoutManager.stackFromEnd = true
         recycler_view.layoutManager = layoutManager
 
-        userId = intent.getStringExtra("USER_ID").toString()
+        val email = intent.getStringExtra("EMAIL").toString()
         fuser = FirebaseAuth.getInstance().currentUser
-
+        println("---------------------------")
+        println(email)
+        println(fuser?.uid)
         btn_send.setOnClickListener {
             val msg = text_send.text.toString()
             if (!msg.equals("")){
@@ -62,26 +65,33 @@ class ChatActivity : AppCompatActivity() {
         }
 
         // firebase
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(userId)
+        reference = FirebaseDatabase.getInstance().getReference("Users")
         reference!!.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
 
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user = dataSnapshot.getValue(Taikhoan::class.java)
-//                username.text = user?.username
-//                if (user?.imageURL.equals("default")){
-//                    profile_image.setImageResource(R.mipmap.ic_launcher)
-//                } else {
-//                    Glide.with(applicationContext).load(user?.imageURL).into(profile_image)
-//                }
-                profile_image.setImageResource(R.mipmap.ic_launcher)
+                val children = dataSnapshot!!.children
+                // This returns the correct child count...
+                println("count: "+dataSnapshot.children.count().toString())
+                var title : String = ""
+                children.forEach { itChild ->
+                    val user = itChild.getValue(UserChat::class.java)
+                    user?.let {
+                        if(it.username == email){
+                            userId = it.id
+                            title = it.username
+                        }
+                    }
+                    println(itChild.toString())
+                }
+                supportActionBar?.title = title
+                //profile_image.setImageResource(R.mipmap.ic_launcher)
                 readMessages(fuser?.uid, userId, "default")
+                seenMessage(userId)
             }
         })
-
-        seenMessage(userId)
     }
 
     private fun seenMessage(useId: String?) {
@@ -119,7 +129,7 @@ class ChatActivity : AppCompatActivity() {
 
                 for (snapshot: DataSnapshot in dataSnapshot.children){
                     val chat = snapshot.getValue(Chat::class.java)
-                    if (chat?.receiver.equals(fuser?.uid) && chat?.sender.equals(userId) || chat?.receiver.equals(userId) && chat?.sender.equals(myId)){
+                    if (chat?.receiver.equals(myId) && chat?.sender.equals(userId) || chat?.receiver.equals(userId) && chat?.sender.equals(myId)){
                         mChat.add(chat!!)
                     }
                 }
