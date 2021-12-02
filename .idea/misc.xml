@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/NMTL/dating/app/src/main/res/layout/activity_fake_login_test.xml" value="0.5" />
         <entry key="..\:/NMTL/dating/app/src/main/res/layout/activity_message.xml" value="0.25" />
+        <entry key="..\:/NMTL/dating/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
+        <entry key="..\:/NMTL/dating/app/src/main/res/layout/main_message_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/NMTL/dating/app/src/main/res/layout/main_profile_fragment.xml" value="0.20520833333333333" />
         <entry key="..\:/NMTL/dating/app/src/main/res/layout/main_tags_fragment.xml" value="0.20520833333333333" />
         <entry key="..\:/NMTL/dating/app/src/main/res/layout/messager_activity.xml" value="0.22" />
